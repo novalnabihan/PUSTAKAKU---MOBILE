@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -28,30 +29,38 @@ import androidx.navigation.NavController
 
 @Composable
 fun SplashScreen(navController: NavController, context: MainActivity) {
-    val Font = FontFamily(Font(R.font.nunito_extrabold))
+    val font = FontFamily(Font(R.font.nunito_extrabold))
+
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(2000)
+        navController.navigate("Home") {
+            popUpTo("Splash") { inclusive = true }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xfffffbee)),// Pastikan padding tidak berlebihan
+            .background(color = Color(0xfffffbee)),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center // Atur vertical arrangement agar logo dan teks lebih rapat
+        verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo), // Ganti dengan ID logo
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
             modifier = Modifier
                 .width(178.dp)
                 .height(136.dp),
             contentScale = ContentScale.FillBounds,
-            // Atur ukuran logo jika perlu
+
         )
-        Spacer(modifier = Modifier.height(20.dp)) // Jarak kecil antara logo dan teks
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "PUSTAKAKU",
             style = TextStyle(
                 fontSize = 30.sp,
-//                fontWeight = FontWeight.Black,
-                fontFamily = Font
+//              fontWeight = FontWeight.Black,
+                fontFamily = font
             )
         )
     }
