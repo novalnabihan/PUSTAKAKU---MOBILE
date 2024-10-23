@@ -1,6 +1,7 @@
 package com.example.pustakaku
 
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.Modifier
@@ -26,10 +27,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.pustakaku.app.MainActivity
 
 
 @Composable
-fun SplashScreen(navController: NavController, context: MainActivity) {
+fun SplashScreen(navController: NavController, context: Context) {
     val font = FontFamily(Font(R.font.nunito_extrabold))
 
     LaunchedEffect(Unit) {
