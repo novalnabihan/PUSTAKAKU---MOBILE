@@ -36,7 +36,7 @@ fun SplashScreen(navController: NavController, context: Context) {
 
     LaunchedEffect(Unit) {
         kotlinx.coroutines.delay(2000)
-        navController.navigate("Home") {
+        navController.navigate("Login") {
             popUpTo("Splash") { inclusive = true }
         }
     }

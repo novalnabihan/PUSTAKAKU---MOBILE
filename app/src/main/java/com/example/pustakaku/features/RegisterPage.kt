@@ -1,13 +1,11 @@
 package com.example.pustakaku.features
 
-
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,40 +26,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pustakaku.R
-
-
+import com.example.pustakaku.ui.theme.AuthViewModel
 
 @Composable
-fun RegisterPage(navController: NavController, context: Context) {
-
-    val nameValue = remember { mutableStateOf("") }
-    val emailValue = remember { mutableStateOf("") }
-    val phoneValue = remember { mutableStateOf("") }
-    val passwordValue = remember { mutableStateOf("") }
-    val confirmPasswordValue = remember { mutableStateOf("") }
+fun RegisterPage(navController: NavController, context: Context, authViewModel: AuthViewModel) {
 
     val passwordVisibility = remember { mutableStateOf(false) }
     val confirmPasswordVisibility = remember { mutableStateOf(false) }
+    val isLoading = authViewModel.isLoading
+    val errorMessage = authViewModel.errorMessage
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.White)
-                .padding(16.dp), // Atur padding untuk keseluruhan konten
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top // Tempatkan elemen di atas
+            verticalArrangement = Arrangement.Top
         ) {
             // Gambar
             Image(
                 painter = painterResource(id = R.drawable.login_image),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(150.dp) // Sesuaikan ukuran gambar agar lebih proporsional
-                    .padding(top = 40.dp) // Kurangi padding atas
+                    .size(150.dp)
+                    .padding(top = 40.dp)
             )
 
-            Spacer(modifier = Modifier.height(20.dp)) // Kurangi jarak antara gambar dan teks "Sign Up"
+            Spacer(modifier = Modifier.height(20.dp))
 
             // Text "Sign Up"
             Text(
@@ -71,12 +64,12 @@ fun RegisterPage(navController: NavController, context: Context) {
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp)) // Kurangi jarak antara teks "Sign Up" dan input
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Input Nama
             OutlinedTextField(
-                value = nameValue.value,
-                onValueChange = { nameValue.value = it },
+                value = authViewModel.registrationName.value,
+                onValueChange = { authViewModel.registrationName.value = it },
                 label = { Text(text = "Name") },
                 placeholder = { Text(text = "Name") },
                 singleLine = true,
@@ -85,8 +78,8 @@ fun RegisterPage(navController: NavController, context: Context) {
 
             // Input Email
             OutlinedTextField(
-                value = emailValue.value,
-                onValueChange = { emailValue.value = it },
+                value = authViewModel.registrationEmail.value,
+                onValueChange = { authViewModel.registrationEmail.value = it },
                 label = { Text(text = "Email Address") },
                 placeholder = { Text(text = "Email Address") },
                 singleLine = true,
@@ -95,8 +88,8 @@ fun RegisterPage(navController: NavController, context: Context) {
 
             // Input Phone
             OutlinedTextField(
-                value = phoneValue.value,
-                onValueChange = { phoneValue.value = it },
+                value = authViewModel.registrationPhone.value,
+                onValueChange = { authViewModel.registrationPhone.value = it },
                 label = { Text(text = "Phone Number") },
                 placeholder = { Text(text = "Phone Number") },
                 singleLine = true,
@@ -106,16 +99,14 @@ fun RegisterPage(navController: NavController, context: Context) {
 
             // Input Password
             OutlinedTextField(
-                value = passwordValue.value,
-                onValueChange = { passwordValue.value = it },
+                value = authViewModel.registrationPassword.value,
+                onValueChange = { authViewModel.registrationPassword.value = it },
                 label = { Text(text = "Password") },
                 placeholder = { Text(text = "Password") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
                 trailingIcon = {
-                    IconButton(onClick = {
-                        passwordVisibility.value = !passwordVisibility.value
-                    }) {
+                    IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value }) {
                         Icon(
                             painter = painterResource(id = R.drawable.password_eye),
                             contentDescription = null,
@@ -123,22 +114,19 @@ fun RegisterPage(navController: NavController, context: Context) {
                         )
                     }
                 },
-                visualTransformation = if (passwordVisibility.value) VisualTransformation.None
-                else PasswordVisualTransformation()
+                visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation()
             )
 
             // Input Confirm Password
             OutlinedTextField(
-                value = confirmPasswordValue.value,
-                onValueChange = { confirmPasswordValue.value = it },
+                value = authViewModel.registrationConfirmPassword.value,
+                onValueChange = { authViewModel.registrationConfirmPassword.value = it },
                 label = { Text(text = "Confirm Password") },
                 placeholder = { Text(text = "Confirm Password") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
                 trailingIcon = {
-                    IconButton(onClick = {
-                        confirmPasswordVisibility.value = !confirmPasswordVisibility.value
-                    }) {
+                    IconButton(onClick = { confirmPasswordVisibility.value = !confirmPasswordVisibility.value }) {
                         Icon(
                             painter = painterResource(id = R.drawable.password_eye),
                             contentDescription = null,
@@ -146,21 +134,30 @@ fun RegisterPage(navController: NavController, context: Context) {
                         )
                     }
                 },
-                visualTransformation = if (confirmPasswordVisibility.value) VisualTransformation.None
-                else PasswordVisualTransformation()
+                visualTransformation = if (confirmPasswordVisibility.value) VisualTransformation.None else PasswordVisualTransformation()
             )
 
-            Spacer(modifier = Modifier.height(16.dp)) // Kurangi jarak antara input dan tombol
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Tombol "Sign Up"
-            Button(onClick = { /* Handle sign up */ },
+            Button(
+                onClick = { authViewModel.register(navController) },
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
-                    .height(50.dp)) {
+                    .height(50.dp)
+            ) {
                 Text(text = "Sign Up", fontSize = 20.sp)
             }
 
-            Spacer(modifier = Modifier.height(16.dp)) // Kurangi jarak antara tombol dan teks bawah
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (errorMessage.value.isNotEmpty()) {
+                Text(
+                    text = errorMessage.value,
+                    color = Color.Red,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
 
             // Text "Login Instead"
             Text(
@@ -175,11 +172,3 @@ fun RegisterPage(navController: NavController, context: Context) {
         }
     }
 }
-
-
-//@Preview
-//@Composable
-//private fun LoginPrev() {
-//    RegisterPage()
-//
-//}

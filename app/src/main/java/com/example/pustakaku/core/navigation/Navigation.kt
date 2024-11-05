@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
+import com.example.pustakaku.HomeScreen
 import com.example.pustakaku.SplashScreen
 import com.example.pustakaku.features.LoginPage
 import com.example.pustakaku.features.RegisterPage
+import com.example.pustakaku.ui.theme.AuthViewModel
 
 
 @Composable
@@ -28,15 +30,16 @@ fun Navigation() {
             composable("Splash") {
                 SplashScreen(navController = navController, context = context)
             }
-//            composable("Onboarding") {
-//                OnboardingScreen(navController = navController, context = context)
-//            }
             composable("Login") {
-                LoginPage(navController = navController, context = context) // Gunakan context di sini
+                LoginPage(navController = navController, context = context, authviewModel = AuthViewModel())
             }
             composable("Register") {
-                RegisterPage(navController = navController, context = context)
+                RegisterPage(navController = navController, context = context, authViewModel = AuthViewModel())
             }
+            composable("Home") {
+                HomeScreen()
+            }
+
         }
     }
 }
