@@ -19,14 +19,13 @@ import com.example.pustakaku.ui.theme.AuthViewModel
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    val context = LocalContext.current // Dapatkan Context dari Compose
-
-
+    val context = LocalContext.current
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        NavHost(navController = navController, startDestination = "Splash") {
+        //TODO: Change startDestination to SplashScreen
+        NavHost(navController = navController, startDestination = "Home") {
             composable("Splash") {
                 SplashScreen(navController = navController, context = context)
             }
@@ -38,6 +37,8 @@ fun Navigation() {
             }
             composable("Home") {
                 HomeScreen()
+                //TODO: Ref navController
+                //HomeScreen(navController = navController, context = context)
             }
 
         }
