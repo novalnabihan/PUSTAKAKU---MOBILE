@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
-import com.example.pustakaku.HomeScreen
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.example.pustakaku.presentations.homepage.HomeScreen
 import com.example.pustakaku.SplashScreen
 import com.example.pustakaku.features.LoginPage
 import com.example.pustakaku.features.RegisterPage
+import com.example.pustakaku.presentations.detail_book.BookDetailScreen
 import com.example.pustakaku.ui.theme.AuthViewModel
 
 
@@ -36,10 +39,18 @@ fun Navigation() {
                 RegisterPage(navController = navController, context = context, authViewModel = AuthViewModel())
             }
             composable("Home") {
-                HomeScreen()
+//                HomeScreen()
                 //TODO: Ref navController
-                //HomeScreen(navController = navController, context = context)
+                HomeScreen(navController = navController)
             }
+            composable(
+                route = "Detail/{bookId}",
+                arguments = listOf(navArgument("bookId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
+                BookDetailScreen(navController = navController, bookId = bookId)
+            }
+
 
         }
     }
