@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "830894343811",
+    "project_id": "pustaka-7bcff",
+    "storage_bucket": "pustaka-7bcff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830894343811:android:084c0b798e9aa73fd7fdb6",
+        "android_client_info": {
+          "package_name": "com.example.pustakaku"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwy-2Mu8Gu6WXsZRHGGZbIKafclJ-LHi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

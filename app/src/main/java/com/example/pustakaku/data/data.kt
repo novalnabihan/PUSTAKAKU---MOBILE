@@ -46,3 +46,5 @@ val booksPopular = listOf(
     BookCardData(title = "Moby-Dick", author = "Herman Melville", likes = 125, rating = 4.1),
     BookCardData(title = "The Catcher in the Rye", author = "J.D. Salinger", likes = 200, rating = 4.5)
 )
+
+data class Genre(val description: String, val title: String)
