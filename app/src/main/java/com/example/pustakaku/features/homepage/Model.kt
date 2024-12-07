@@ -1,4 +1,4 @@
-package com.example.pustakaku.presentations.homepage
+package com.example.pustakaku.features.homepage
 
 data class GenreModel (
   val title:String = "",

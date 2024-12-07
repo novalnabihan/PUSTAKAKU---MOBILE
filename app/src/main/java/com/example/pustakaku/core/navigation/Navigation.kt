@@ -11,11 +11,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import com.example.pustakaku.presentations.homepage.HomeScreen
+import com.example.pustakaku.features.homepage.HomeScreen
 import com.example.pustakaku.SplashScreen
 import com.example.pustakaku.features.LoginPage
 import com.example.pustakaku.features.RegisterPage
-import com.example.pustakaku.presentations.detail_book.BookDetailScreen
+import com.example.pustakaku.features.detail_book.BookDetailScreen
 import com.example.pustakaku.ui.theme.AuthViewModel
 
 
