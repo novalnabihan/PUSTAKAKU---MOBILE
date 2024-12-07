@@ -1,6 +1,6 @@
-package com.example.pustakaku.presentations.detail_book
+package com.example.pustakaku.features.detail_book
 
-import com.example.pustakaku.presentations.homepage.BookModel
+import com.example.pustakaku.features.homepage.BookModel
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
