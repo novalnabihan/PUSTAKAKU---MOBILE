@@ -1,6 +1,7 @@
 package com.example.pustakaku.features.detail_book
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -102,8 +103,10 @@ fun BookDetailScreen(
               LabelApp(text = "Fabel", backgroundColor = BlueBackground, textColor = BlueText)
               Spacer(modifier = Modifier.height(20.dp))
               HtmlText(html = book!!.description, fontSize = 16f)
-              Spacer(modifier = Modifier.height(20.dp))
-              PrimaryButton(onClick = { /*TODO*/ }, text = "Baca Sekarang!", fullWidth = true)
+              Spacer(modifier = Modifier.height(40.dp))
+              PrimaryButton(onClick = {
+                navController.navigate("Detail/${bookId}/read")
+              }, text = "Baca Sekarang!", fullWidth = true)
             }
           }
 
