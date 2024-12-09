@@ -127,7 +127,7 @@ fun GamifiedCard(totalBooks: Int, booksRead: Int) {
       )
       Spacer(modifier = Modifier.height(8.dp))
       Text(
-        text = "Books read : $booksRead / $totalBooks",
+        text = "Books read  $booksRead / $totalBooks",
         color = Color.White,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
@@ -213,7 +213,8 @@ fun BookCard(
         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
-        color = colorResource(id = R.color.dark_gray)
+        color = colorResource(id = R.color.dark_gray),
+        modifier = Modifier.fillMaxWidth()
       )
 
       Spacer(modifier = Modifier.height(4.dp))
@@ -265,7 +266,6 @@ fun BookCard(
     }
 
   }
-
 }
 
 @Composable
@@ -278,7 +278,7 @@ fun MyImage(
   Image(
     painter = painterResource(id = imageResId),
     contentDescription = contentDescription,
-    modifier = modifier,
+//    modifier = modifier,
     contentScale = contentScale
   )
 }
