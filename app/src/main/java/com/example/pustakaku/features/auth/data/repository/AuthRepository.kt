@@ -1,6 +1,5 @@
 package com.example.pustakaku.features.auth.data.repository
 
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -42,6 +41,17 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getIn
         }
     }
 
-
-
+    suspend fun getUserName(uid: String): Result<String>{
+        return try {
+            val document = firestore.collection("users").document(uid).get().await()
+            if (document.exists()){
+                val name = document.getString("name") ?: "Users"
+                Result.success(name)
+            } else {
+                Result.failure(Exception("User not found"))
+            }
+        } catch (e: Exception){
+            Result.failure(e)
+        }
+    }
 }
