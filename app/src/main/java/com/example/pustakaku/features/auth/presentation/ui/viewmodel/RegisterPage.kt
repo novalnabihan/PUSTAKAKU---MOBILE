@@ -148,6 +148,8 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
                     authViewModel.register(
                         authViewModel.registrationEmail.value,
                         authViewModel.registrationPassword.value,
+                        authViewModel.registrationName.value,
+                        authViewModel.registrationPhone.value,
 //                        name
                         onSuccess = { navController.navigate("Login") }
                     )
