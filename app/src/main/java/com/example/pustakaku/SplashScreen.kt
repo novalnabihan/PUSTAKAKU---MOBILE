@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pustakaku.app.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
@@ -35,9 +36,16 @@ fun SplashScreen(navController: NavController, context: Context) {
     val font = FontFamily(Font(R.font.nunito_extrabold))
 
     LaunchedEffect(Unit) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
         kotlinx.coroutines.delay(2000)
-        navController.navigate("Login") {
-            popUpTo("Splash") { inclusive = true }
+        if (currentUser != null) {
+            navController.navigate("Home") {
+                popUpTo("Splash") { inclusive = true }
+            }
+        } else {
+            navController.navigate("Login") {
+                popUpTo("Splash") { inclusive = true }
+            }
         }
     }
 
