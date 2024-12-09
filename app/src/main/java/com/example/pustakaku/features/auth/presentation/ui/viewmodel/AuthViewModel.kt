@@ -47,10 +47,10 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String, password: String, onSuccess: () -> Unit) {
+    fun register(email: String, password: String, name: String, phone: String, onSuccess: () -> Unit) {
         _isLoading.value = true
         viewModelScope.launch {
-            val result = signUpUseCase.execute(email, password)
+            val result = signUpUseCase.execute(email, password, name, phone)
             _isLoading.value = false
             if (result.isSuccess) {
                 onSuccess()

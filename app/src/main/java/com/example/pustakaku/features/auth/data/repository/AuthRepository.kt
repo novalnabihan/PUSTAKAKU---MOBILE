@@ -25,5 +25,23 @@ class AuthRepository(private val firebaseAuth: FirebaseAuth = FirebaseAuth.getIn
         }
     }
 
+    suspend fun registerAndSaveUser(email: String, password: String, name: String, phone: String): Result<Unit>{
+        return try {
+            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            authResult.user?.let  { user ->
+                val userData = hashMapOf(
+                    "name" to name,
+                    "email" to email,
+                    "phone" to phone
+                )
+                firestore.collection("users").document(user.uid).set(userData).await()
+            }
+            Result.success(Unit)
+        } catch (e: Exception){
+            Result.failure(e)
+        }
+    }
+
+
 
 }
