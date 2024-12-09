@@ -1,5 +1,7 @@
-package com.example.pustakaku.features
 
+package com.example.pustakaku.features.auth.presentation.ui.viewmodel
+
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,8 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pustakaku.R
-import com.example.pustakaku.ui.theme.AuthViewModel
+//import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthViewModel
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun RegisterPage(navController: NavController, context: Context, authViewModel: AuthViewModel) {
 
@@ -141,7 +144,14 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
 
             // Tombol "Sign Up"
             Button(
-                onClick = { authViewModel.register(navController) },
+                onClick = {
+                    authViewModel.register(
+                        authViewModel.registrationEmail.value,
+                        authViewModel.registrationPassword.value,
+//                        name
+                        onSuccess = { navController.navigate("Login") }
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .height(50.dp)
