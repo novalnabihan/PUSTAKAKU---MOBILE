@@ -19,6 +19,7 @@ import com.example.pustakaku.features.auth.domain.usecase.SignUpUseCase
 import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthViewModel
 import com.example.pustakaku.features.auth.presentation.ui.viewmodel.LoginPage
 import com.example.pustakaku.features.auth.presentation.ui.viewmodel.RegisterPage
+import com.example.pustakaku.features.chapter_content.ReadingBookScreen
 //import com.example.pustakaku.features.auth.presentation.ui.viewmodel.LoginPage
 //import com.example.pustakaku.features.auth.presentation.ui.viewmodel.RegisterPage
 //import com.example.pustakaku.features.auth.presentation.ui.LoginPage
@@ -64,7 +65,13 @@ fun Navigation() {
                 BookDetailScreen(navController = navController, bookId = bookId)
             }
 
-
+            composable(
+                route = "Detail/{bookId}/read",
+                arguments = listOf(navArgument("bookId") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
+                ReadingBookScreen(navController = navController, bookId = bookId)
+            }
         }
     }
 }
