@@ -111,6 +111,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
               likes = item.likes,
               modifier = Modifier
                 .padding(horizontal = 8.dp)
+                .widthIn(max = 200.dp, min = 150.dp)
                 .clickable {
                   navController.navigate("Detail/${item.id}")
                 },
