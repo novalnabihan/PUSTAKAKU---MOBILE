@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -92,5 +94,5 @@ dependencies {
 
     //Firebase
     implementation("com.google.firebase:firebase-common-ktx:20.3.3")
-
+    implementation ("com.google.firebase:firebase-auth-ktx:21.1.0")
 }

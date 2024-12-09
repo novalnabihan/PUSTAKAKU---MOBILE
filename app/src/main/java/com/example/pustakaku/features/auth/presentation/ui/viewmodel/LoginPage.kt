@@ -1,4 +1,4 @@
-package com.example.pustakaku.features
+package com.example.pustakaku.features.auth.presentation.ui.viewmodel
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pustakaku.R
-import com.example.pustakaku.ui.theme.AuthViewModel
+import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthViewModel
 
 
 @Composable
@@ -103,7 +103,12 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
 
             // Tombol "Sign In"
             Button(
-                onClick = { authviewModel.login(navController)},
+                onClick = {
+                    authviewModel.login(
+                        emailValue.value,
+                        passwordValue.value,
+                        onSuccess = { navController.navigate("Home")}
+                        ) },
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .height(50.dp)

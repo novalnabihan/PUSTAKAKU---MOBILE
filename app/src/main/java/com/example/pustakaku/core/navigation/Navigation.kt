@@ -13,10 +13,17 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.pustakaku.features.homepage.HomeScreen
 import com.example.pustakaku.SplashScreen
-import com.example.pustakaku.features.LoginPage
-import com.example.pustakaku.features.RegisterPage
+import com.example.pustakaku.features.auth.data.repository.AuthRepository
+import com.example.pustakaku.features.auth.domain.usecase.SignInUseCase
+import com.example.pustakaku.features.auth.domain.usecase.SignUpUseCase
+import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthViewModel
+import com.example.pustakaku.features.auth.presentation.ui.viewmodel.LoginPage
+import com.example.pustakaku.features.auth.presentation.ui.viewmodel.RegisterPage
+//import com.example.pustakaku.features.auth.presentation.ui.viewmodel.LoginPage
+//import com.example.pustakaku.features.auth.presentation.ui.viewmodel.RegisterPage
+//import com.example.pustakaku.features.auth.presentation.ui.LoginPage
+//import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthView
 import com.example.pustakaku.features.detail_book.BookDetailScreen
-import com.example.pustakaku.ui.theme.AuthViewModel
 
 
 @Composable
@@ -28,15 +35,21 @@ fun Navigation() {
         color = MaterialTheme.colorScheme.background
     ) {
         //TODO: Change startDestination to SplashScreen
-        NavHost(navController = navController, startDestination = "Home") {
+        NavHost(navController = navController, startDestination = "Splash") {
             composable("Splash") {
                 SplashScreen(navController = navController, context = context)
             }
             composable("Login") {
-                LoginPage(navController = navController, context = context, authviewModel = AuthViewModel())
+                LoginPage(navController = navController, context = context, authviewModel = AuthViewModel(
+                    SignInUseCase(AuthRepository()), SignUpUseCase(AuthRepository())
+                )
+                )
             }
             composable("Register") {
-                RegisterPage(navController = navController, context = context, authViewModel = AuthViewModel())
+                RegisterPage(navController = navController, context = context, authViewModel = AuthViewModel(
+                    SignInUseCase(AuthRepository()), SignUpUseCase(AuthRepository())
+                )
+                )
             }
             composable("Home") {
 //                HomeScreen()
@@ -55,5 +68,4 @@ fun Navigation() {
         }
     }
 }
-
 
