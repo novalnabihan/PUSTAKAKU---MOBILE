@@ -37,6 +37,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -54,6 +55,7 @@ import com.example.pustakaku.features.homepage.components.SearchBar
 fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = viewModel()) {
   val genres = dataViewModel._genres.value
   val books = dataViewModel._books.value
+  val userName = dataViewModel.userName.value
 
   Surface(
     modifier = Modifier.fillMaxSize(),
@@ -66,7 +68,11 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
     ) {
       SearchBar()
       Spacer(modifier = Modifier.height(24.dp))
-      GreetingText(name = "Fayz")
+
+      LaunchedEffect(Unit) {
+        dataViewModel.loadUserName()
+      }
+      GreetingText(name = userName)
       GamifiedCard(totalBooks = 10, booksRead = 3)
       Spacer(modifier = Modifier.height(24.dp))
 
