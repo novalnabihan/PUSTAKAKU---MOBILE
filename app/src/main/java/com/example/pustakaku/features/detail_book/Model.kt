@@ -8,7 +8,8 @@ data class BookDetailModel(
   val likes: Int = 0,
   val rating: Double = 0.0,
   val views: Int = 0,
-  val chapters: List<ChapterModel> = emptyList()
+  val chapters: List<ChapterModel> = emptyList(),
+  val kategori: String = ""
 )
 
 data class ChapterModel(

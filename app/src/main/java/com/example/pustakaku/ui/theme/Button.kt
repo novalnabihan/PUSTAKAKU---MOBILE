@@ -20,21 +20,17 @@ fun PrimaryButton(
   fontSize: TextUnit = 14.sp,
 ) {
   Button(
-    onClick = onClick,
+    onClick = { onClick() },
     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A2438)),
     shape = MaterialTheme.shapes.small,
     modifier = Modifier.then(
       if (fullWidth) Modifier.fillMaxWidth() else Modifier
     )
   ) {
-    Text(
-      text = text,
-      color = Color.White,
-      fontSize = fontSize,
-      fontWeight = FontWeight.Bold
-    )
+    Text(text = text, fontSize = fontSize)
   }
 }
+
 
 
 @Composable

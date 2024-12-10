@@ -12,5 +12,6 @@ data class BookModel (
   val description: String= "",
   val likes:Int= 0,
   val rating:Double = 0.0,
-  val views:Int = 0
+  val views:Int = 0,
+  val kategori: String = ""
 )

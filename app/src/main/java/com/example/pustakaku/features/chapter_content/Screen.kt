@@ -39,6 +39,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -53,8 +55,8 @@ fun ReadingBookScreen(
   val viewModel: DataViewModel = viewModel()
   val book by viewModel.detailBook.collectAsState()
 
+  val currentPage = remember { mutableStateOf(0) }
   val pagerState = rememberPagerState(initialPage = 0, pageCount = { book?.chapters?.size ?: 0 })
-//  val scope = rememberCoroutineScope()
   val scope = rememberCoroutineScope()
 
   LaunchedEffect(bookId) {
@@ -129,6 +131,7 @@ fun ReadingBookScreen(
                   pagerState.animateScrollToPage(
                     pagerState.currentPage - 1
                   )
+                  currentPage.value = maxOf(currentPage.value, pagerState.currentPage)
                 }
               },
               enabled = pagerState.currentPage > 0
@@ -158,6 +161,7 @@ fun ReadingBookScreen(
                   pagerState.animateScrollToPage(
                     pagerState.currentPage + 1
                   )
+                  currentPage.value = maxOf(currentPage.value, pagerState.currentPage)
                 }
               },
               enabled = pagerState.currentPage < pagerState.pageCount - 1
@@ -180,12 +184,15 @@ fun ReadingBookScreen(
               }
             }
           }
-
-
         }
       }
     }
-
+  }
+  LaunchedEffect(currentPage.value) {
+    if (book != null) {
+      val totalChapters = book?.chapters?.size ?: 0
+      viewModel.saveOrUpdateUserBook(bookId, currentPage.value, totalChapters)
+    }
   }
 }
 

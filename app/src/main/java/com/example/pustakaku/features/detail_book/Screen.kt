@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -27,31 +28,36 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pustakaku.R
 import com.example.pustakaku.components.HtmlText
-import com.example.pustakaku.features.detail_book.components.BookDetailTopBar
 import com.example.pustakaku.features.detail_book.components.ChapterItem
 import com.example.pustakaku.features.detail_book.components.HeaderBookDetail
 import com.example.pustakaku.ui.theme.BlueBackground
 import com.example.pustakaku.ui.theme.BlueText
 import com.example.pustakaku.ui.theme.LabelApp
 import com.example.pustakaku.ui.theme.PrimaryButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun BookDetailScreen(
-  navController: NavController, bookId: String
+  navController: NavController,
+  bookId: String,
+
 ) {
   val viewModel: DataViewModel = viewModel()
   val book by viewModel.detailBook.collectAsState()
+
   var selectedTabIndex by remember { mutableStateOf(0) }
 
   LaunchedEffect(bookId) {
     viewModel.getData(bookId)
+    viewModel.getUid()
   }
 
   if (book == null) {
@@ -69,7 +75,29 @@ fun BookDetailScreen(
     }
   } else {
     Scaffold(
-      bottomBar = { /* Bottom bar */ },
+      bottomBar = {
+        Row(
+          modifier = Modifier
+            .background(
+              color = colorResource(id = R.color.wheat)
+            )
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+        ) {
+          PrimaryButton(
+            onClick = {
+              navController.navigate("Detail/$bookId/read")
+              book?.let {
+                val totalChapters = it.chapters.size
+                CoroutineScope(Dispatchers.IO).launch {
+                  viewModel.saveOrUpdateUserBook(bookId, 0, totalChapters)
+                }
+              }
+            },
+            text = "Baca Sekarang!",
+            fullWidth = true
+          )
+        }
+      }
     ) { paddingValues ->
       Column(
         modifier = Modifier
@@ -80,14 +108,18 @@ fun BookDetailScreen(
         HeaderBookDetail(
           title = book!!.title,
           author = book!!.author,
-          episodeCount = 3,
+          episodeCount = book!!.chapters.size,
           rating = "${book!!.rating}",
           imageRes = R.drawable.kancil,
           navController = navController
         )
 
         val tabs = listOf("Informasi", "Chapters")
-        TabRow(selectedTabIndex = selectedTabIndex, Modifier.background(color = Color(0xFFCC9933))) {
+        TabRow(
+          selectedTabIndex = selectedTabIndex,
+          containerColor = colorResource(id = R.color.wheat),
+          contentColor = colorResource(id = R.color.dark_gray)
+        ) {
           tabs.forEachIndexed { index, title ->
             Tab(
               selected = selectedTabIndex == index,
@@ -100,13 +132,14 @@ fun BookDetailScreen(
         when (selectedTabIndex) {
           0 -> { // Information Tab
             Column(modifier = Modifier.padding(16.dp)) {
-              LabelApp(text = "Fabel", backgroundColor = BlueBackground, textColor = BlueText)
+              LabelApp(
+                text = book!!.kategori,
+                backgroundColor = BlueBackground,
+                textColor = BlueText
+              )
               Spacer(modifier = Modifier.height(20.dp))
               HtmlText(html = book!!.description, fontSize = 16f)
               Spacer(modifier = Modifier.height(40.dp))
-              PrimaryButton(onClick = {
-                navController.navigate("Detail/${bookId}/read")
-              }, text = "Baca Sekarang!", fullWidth = true)
             }
           }
 
@@ -128,5 +161,4 @@ fun BookDetailScreen(
     }
   }
 }
-
 
