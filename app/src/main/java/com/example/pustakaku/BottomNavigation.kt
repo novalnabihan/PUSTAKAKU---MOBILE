@@ -1,6 +1,7 @@
 package com.example.pustakaku
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,8 @@ fun BottomMenu(
     activeHighlightColor: Color = colorResource(id = R.color.dark_gray),
     activeTextColor: Color = colorResource(id = R.color.dark_gray),
     inactiveTextColor: Color = colorResource(id = R.color.medium_gray),
-    initialSelectedItemIndex: Int = 1
+    initialSelectedItemIndex: Int = 0,
+    onItemClick: (Int) -> Unit
 ) {
     var selectedItemIndex by remember {
         mutableStateOf(initialSelectedItemIndex)
@@ -52,6 +54,7 @@ fun BottomMenu(
                 inactiveTextColor = inactiveTextColor
             ) {
                 selectedItemIndex = index
+                onItemClick(index)
             }
         }
     }
@@ -70,9 +73,9 @@ fun BottomMenuItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-//        modifier = Modifier.clickable {
-//            onItemClick()
-//        }
+        modifier = Modifier.clickable {
+            onItemClick()
+        }
     ) {
         Box(
             contentAlignment = Alignment.Center,

@@ -6,11 +6,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.pustakaku.BottomMenu
+import com.example.pustakaku.BottomMenuContent
 import com.example.pustakaku.features.homepage.HomeScreen
 import com.example.pustakaku.SplashScreen
 import com.example.pustakaku.features.auth.data.repository.AuthRepository
@@ -25,54 +35,104 @@ import com.example.pustakaku.features.chapter_content.ReadingBookScreen
 //import com.example.pustakaku.features.auth.presentation.ui.LoginPage
 //import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthView
 import com.example.pustakaku.features.detail_book.BookDetailScreen
+import com.example.pustakaku.features.history.HistoryPage
+import com.example.pustakaku.features.profile.ProfilePage
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     val context = LocalContext.current
+    val currentRoute = navController.currentBackStackEntryFlow.collectAsState(initial = null).value?.destination?.route
+
+    // Daftar menu untuk BottomMenu
+    val bottomMenuItems = listOf(
+        BottomMenuContent("Home", Icons.Default.Home),
+        BottomMenuContent("History", Icons.Default.List),
+        BottomMenuContent("Profile", Icons.Default.Person)
+    )
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        //TODO: Change startDestination to SplashScreen
-        NavHost(navController = navController, startDestination = "Splash") {
-            composable("Splash") {
-                SplashScreen(navController = navController, context = context)
-            }
-            composable("Login") {
-                LoginPage(navController = navController, context = context, authviewModel = AuthViewModel(
-                    SignInUseCase(AuthRepository()), SignUpUseCase(AuthRepository())
+        Scaffold(
+            bottomBar = {
+                if (currentRoute in listOf("Home", "History", "Profile"))
+                BottomMenu(
+                    items = bottomMenuItems,
+                    modifier = Modifier,
+                    initialSelectedItemIndex = 0,
+                    onItemClick = { index ->
+                        val route = when (index) {
+                            0 -> "Home"
+                            1 -> "History"
+                            2 -> "Profile"
+                            else -> "Home"
+                        }
+                        navController.navigate(route) {
+                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 )
-                )
             }
-            composable("Register") {
-                RegisterPage(navController = navController, context = context, authViewModel = AuthViewModel(
-                    SignInUseCase(AuthRepository()), SignUpUseCase(AuthRepository())
-                )
-                )
-            }
-            composable("Home") {
-//                HomeScreen()
-                //TODO: Ref navController
-                HomeScreen(navController = navController)
-            }
-            composable(
-                route = "Detail/{bookId}",
-                arguments = listOf(navArgument("bookId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
-                BookDetailScreen(navController = navController, bookId = bookId)
-            }
-
-            composable(
-                route = "Detail/{bookId}/read",
-                arguments = listOf(navArgument("bookId") { type = NavType.StringType })
-            ) { backStackEntry ->
-                val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
-                ReadingBookScreen(navController = navController, bookId = bookId)
+        ) { paddingValues ->
+            NavHost(
+                navController = navController,
+                startDestination = "Splash",
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                composable("Splash") {
+                    SplashScreen(navController = navController, context = context)
+                }
+                composable("Login") {
+                    LoginPage(
+                        navController = navController,
+                        context = context,
+                        authviewModel = AuthViewModel(
+                            SignInUseCase(AuthRepository()),
+                            SignUpUseCase(AuthRepository())
+                        )
+                    )
+                }
+                composable("Register") {
+                    RegisterPage(
+                        navController = navController,
+                        context = context,
+                        authViewModel = AuthViewModel(
+                            SignInUseCase(AuthRepository()),
+                            SignUpUseCase(AuthRepository())
+                        )
+                    )
+                }
+                composable("Home") {
+                    HomeScreen(navController = navController)
+                }
+                composable("History") {
+                    HistoryPage(navController = navController)
+                }
+                composable("Profile") {
+                    ProfilePage(navController = navController)
+                }
+                composable(
+                    route = "Detail/{bookId}",
+                    arguments = listOf(navArgument("bookId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
+                    BookDetailScreen(navController = navController, bookId = bookId)
+                }
+                composable(
+                    route = "Detail/{bookId}/read",
+                    arguments = listOf(navArgument("bookId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val bookId = backStackEntry.arguments?.getString("bookId") ?: ""
+                    ReadingBookScreen(navController = navController, bookId = bookId)
+                }
             }
         }
     }
 }
+
 
