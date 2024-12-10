@@ -53,8 +53,8 @@ import com.example.pustakaku.features.homepage.components.SearchBar
 
 @Composable
 fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = viewModel()) {
-  val genres = dataViewModel._genres.value
-  val books = dataViewModel._books.value
+  val genres_ = dataViewModel.genres.value
+  val books_ = dataViewModel.books.value
   val userName = dataViewModel.userName.value
 
   Surface(
@@ -66,6 +66,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
         .padding(16.dp)
         .verticalScroll(rememberScrollState())
     ) {
+      Spacer(modifier = Modifier.height(20.dp))
       SearchBar()
       Spacer(modifier = Modifier.height(24.dp))
 
@@ -76,7 +77,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
       GamifiedCard(totalBooks = 10, booksRead = 3)
       Spacer(modifier = Modifier.height(24.dp))
 
-      if (genres.isEmpty() or books.isEmpty()) {
+      if (genres_.isEmpty() or books_.isEmpty()) {
         Box(
           modifier = Modifier
             .fillMaxSize(),
@@ -96,7 +97,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
           contentPadding = PaddingValues(vertical = 16.dp),
           horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-          items(genres) { item ->
+          items(genres_) { item ->
             DynamicCard(
               icon = Icons.Filled.Share,
               title = item.title,
@@ -109,7 +110,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
           modifier = Modifier
             .fillMaxWidth()
         ) {
-          items(books) { item ->
+          items(books_) { item ->
             BookCard(
               title = item.title,
               rating = item.rating,
