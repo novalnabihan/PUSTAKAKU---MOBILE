@@ -39,6 +39,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -58,6 +59,8 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
   val genres = dataViewModel.genres.value
   val books = dataViewModel.books.value
   val userName = dataViewModel.userName.value
+  val bookProgress by dataViewModel.getBooksProgress().observeAsState(initial = DataViewModel.BookProgress(0,0))
+
 
   Surface(
     modifier = Modifier.fillMaxSize(),
@@ -76,7 +79,16 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
         dataViewModel.loadUserName()
       }
       GreetingText(name = userName)
-      GamifiedCard(totalBooks = 10, booksRead = 3)
+
+      if (bookProgress.totalBooks == 0) {
+        Text("No books found. Start reading!")
+      } else {
+        GamifiedCard(
+          totalBooks = bookProgress.totalBooks,
+          booksRead = bookProgress.booksRead
+        )
+      }
+
       Spacer(modifier = Modifier.height(24.dp))
 
       if (genres.isEmpty() or books.isEmpty()) {

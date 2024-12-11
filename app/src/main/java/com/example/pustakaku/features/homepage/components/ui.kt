@@ -122,7 +122,7 @@ fun GamifiedCard(totalBooks: Int, booksRead: Int) {
       modifier = Modifier.fillMaxSize()
     ) {
       Text(
-        text = "Keep Reading Yo!!",
+        text = "Hebat, Lanjutkan Membaca!",
         color = Color.White,
         fontSize = 16.sp,
       )
