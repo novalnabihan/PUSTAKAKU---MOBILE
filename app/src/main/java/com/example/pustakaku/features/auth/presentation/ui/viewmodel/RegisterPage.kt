@@ -167,7 +167,7 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
 
             // Text "Login Instead"
             Text(
-                text = "Login Instead",
+                text = "Sudah punya akun? Login",
                 modifier = Modifier.clickable(onClick = {
                     navController.navigate("Login") {
                         popUpTo(navController.graph.startDestinationId)

@@ -110,7 +110,7 @@ fun GamifiedCard(totalBooks: Int, booksRead: Int) {
       )
       Spacer(modifier = Modifier.height(8.dp))
       Text(
-        text = "Books read  $booksRead / $totalBooks",
+        text = "Telah dibaca  $booksRead / $totalBooks",
         color = Color.White,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp

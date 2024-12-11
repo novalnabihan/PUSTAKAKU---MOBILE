@@ -138,7 +138,7 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
 
             // Text "Create An Account"
             Text(
-                text = "Create An Account",
+                text = "Belum punya akun? Buat akun",
                 modifier = Modifier.clickable(onClick = {
                     navController.navigate("Register") {
                         popUpTo(navController.graph.startDestinationId)

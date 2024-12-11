@@ -102,7 +102,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
           LoadingView()
         } else {
           if (bookProgress.totalBooks == 0) {
-            Text("No books found. Start reading!")
+            Text("Kamu belum mulai membaca. Mulai sekarang Yuk!")
           } else {
             GamifiedCard(
               totalBooks = bookProgress.totalBooks,
