@@ -189,7 +189,7 @@ fun BookCard(
   Column(
     modifier = modifier
       .fillMaxWidth()
-      .height(410.dp)
+      .height(450.dp)
       .padding(8.dp)
   ) {
     // Gambar buku
@@ -237,6 +237,7 @@ fun BookCard(
             painter = painterResource(id = R.drawable.hearth),
             contentDescription = "Likes",
             modifier = Modifier.size(18.dp),
+            tint =  colorResource(id = R.color.dark_gray)
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
@@ -266,7 +267,6 @@ fun BookCard(
 
 fun formatLikesCount(likes: Number): String {
   return when {
-    likes.toLong() >= 1_000_000 -> "${likes.toLong() / 1_000_000}M" // Jutaan
     likes.toLong() >= 1_000 -> "${likes.toLong() / 1_000}K" // Ribuan
     else -> likes.toString() // Di bawah 1.000, tampilkan angka asli
   }
