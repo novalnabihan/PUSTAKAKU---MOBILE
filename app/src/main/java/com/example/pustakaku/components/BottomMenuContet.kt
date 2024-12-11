@@ -1,6 +1,5 @@
-package com.example.pustakaku
+package com.example.pustakaku.components
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.annotation.DrawableRes
 
 data class BottomMenuContent(
     val title: String,

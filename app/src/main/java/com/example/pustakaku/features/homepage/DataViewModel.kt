@@ -127,5 +127,4 @@ class DataViewModel : ViewModel() {
       }
     }
   }
-
 }

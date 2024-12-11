@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -43,17 +44,17 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(Color(0xfffffbee))
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             // Gambar
             Image(
-                painter = painterResource(id = R.drawable.login_image),
+                painter = painterResource(id = R.drawable.register_image),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(250.dp)
                     .padding(top = 40.dp)
             )
 
@@ -89,16 +90,6 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
                 modifier = Modifier.fillMaxWidth(0.8f)
             )
 
-            // Input Phone
-            OutlinedTextField(
-                value = authViewModel.registrationPhone.value,
-                onValueChange = { authViewModel.registrationPhone.value = it },
-                label = { Text(text = "Phone Number") },
-                placeholder = { Text(text = "Phone Number") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth(0.8f),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-            )
 
             // Input Password
             OutlinedTextField(
@@ -149,11 +140,14 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
                         authViewModel.registrationEmail.value,
                         authViewModel.registrationPassword.value,
                         authViewModel.registrationName.value,
-                        authViewModel.registrationPhone.value,
 //                        name
                         onSuccess = { navController.navigate("Login") }
                     )
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF8E2610), // Warna latar belakang tombol (contoh: biru)
+                    contentColor = Color.White // Warna teks pada tombol
+                ),
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .height(50.dp)
@@ -173,7 +167,7 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
 
             // Text "Login Instead"
             Text(
-                text = "Login Instead",
+                text = "Sudah punya akun? Login",
                 modifier = Modifier.clickable(onClick = {
                     navController.navigate("Login") {
                         popUpTo(navController.graph.startDestinationId)

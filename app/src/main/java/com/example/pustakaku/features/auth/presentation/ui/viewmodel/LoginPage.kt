@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -39,18 +40,22 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
     val isLoading = authviewModel.isLoading
     val errorMessage = authviewModel.errorMessage
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF7E7CE)), // Tambahkan warna latar belakang di sini
+        contentAlignment = Alignment.BottomCenter
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
                 .padding(16.dp), // Sesuaikan padding sesuai kebutuhan
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top // Sesuaikan alignment agar konten di atas lebih rapat
         ) {
             // Gambar
             Image(
-                painter = painterResource(id = R.drawable.login_image), // Sesuaikan dengan gambar yang kamu pakai
+                painter = painterResource(id = R.drawable.login_image2), // Sesuaikan dengan gambar yang kamu pakai
                 contentDescription = null,
                 modifier = Modifier
                     .size(400.dp) // Sesuaikan ukuran gambar
@@ -92,7 +97,7 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
                         Icon(
                             painter = painterResource(id = R.drawable.password_eye),
                             contentDescription = null,
-                            tint = if (passwordVisibility.value) Color.White else Color.Gray
+                            tint = if (passwordVisibility.value) Color.Gray else Color.Black // Warna ikon sesuai status
                         )
                     }
                 },
@@ -107,8 +112,13 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
                     authviewModel.login(
                         emailValue.value,
                         passwordValue.value,
-                        onSuccess = { navController.navigate("Home")}
-                        ) },
+                        onSuccess = { navController.navigate("Home") }
+                    )
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF8E2610), // Warna latar belakang tombol (contoh: biru)
+                    contentColor = Color.White // Warna teks pada tombol
+                ),
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .height(50.dp)
@@ -118,7 +128,7 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
 
             Spacer(modifier = Modifier.height(16.dp)) // Sesuaikan jarak antara tombol dan teks bawah
 
-            if (errorMessage.value.isNotEmpty()){
+            if (errorMessage.value.isNotEmpty()) {
                 Text(
                     text = errorMessage.value,
                     color = Color.Red,
@@ -128,7 +138,7 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
 
             // Text "Create An Account"
             Text(
-                text = "Create An Account",
+                text = "Belum punya akun? Buat akun",
                 modifier = Modifier.clickable(onClick = {
                     navController.navigate("Register") {
                         popUpTo(navController.graph.startDestinationId)
@@ -140,12 +150,3 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
     }
 }
 
-
-
-
-//@Preview
-//@Composable
-//private fun LoginPrev() {
-//    LoginPage()
-//
-//}

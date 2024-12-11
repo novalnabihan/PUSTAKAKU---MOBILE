@@ -24,3 +24,10 @@ val GreenText = Color(0xFF339966)
 
 val GrayBackground = Color(0xFFE5E5E5)
 val GrayText = Color(0xFF666666)
+
+val OrangeBackground = Color(0xFFEB9323)
+val OrangeText = Color(0xFFFFA500)
+
+val MaroonBackground = Color (0XFF8E2610)
+
+//0xfffffbee

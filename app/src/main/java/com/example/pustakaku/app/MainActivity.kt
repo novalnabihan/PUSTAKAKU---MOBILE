@@ -11,6 +11,7 @@ import com.google.firebase.initialize
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         Firebase.initialize(this) // This line
         setContent {
@@ -20,3 +21,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

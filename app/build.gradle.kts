@@ -96,4 +96,11 @@ dependencies {
     //Firebase
     implementation("com.google.firebase:firebase-common-ktx:20.3.3")
     implementation ("com.google.firebase:firebase-auth-ktx:21.1.0")
+
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.0")
+
+    implementation ("androidx.compose.foundation:foundation:1.5.0")
+
+
+
 }

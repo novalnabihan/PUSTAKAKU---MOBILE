@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -49,42 +50,23 @@ import com.example.pustakaku.R
 
 @Composable
 fun DynamicCard(
-  icon: ImageVector,
   title: String,
   backgroundColor: Color,
   modifier: Modifier = Modifier
 ) {
-  Column(
-    horizontalAlignment = Alignment.Start,
-    verticalArrangement = Arrangement.Center,
+  Box(
     modifier = modifier
-      .size(width = 150.dp, height = 120.dp)
-      .background(color = backgroundColor, shape = RoundedCornerShape(12.dp))
-      .padding(16.dp)
+      .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
+      .padding(horizontal = 16.dp, vertical = 8.dp) // Padding untuk teks di dalam card
   ) {
-    // Icon
-    Icon(
-      imageVector = icon,
-      contentDescription = null,
-      tint = Color.White,
-
-      modifier = Modifier
-        .size(30.dp)
-        .background(
-          color = Color.White.copy(alpha = 0.2f),
-          shape = CircleShape
-        )
-        .padding(4.dp)
-    )
-    Spacer(modifier = Modifier.height(8.dp))
-    // Title
     Text(
       text = title,
       style = TextStyle(
         color = Color.White,
-        fontSize = 18.sp,
+        fontSize = 16.sp, // Ukuran font disesuaikan
         fontWeight = FontWeight.Bold
-      )
+      ),
+      modifier = Modifier.align(Alignment.Center) // Teks berada di tengah
     )
   }
 }
@@ -112,7 +94,7 @@ fun GamifiedCard(totalBooks: Int, booksRead: Int) {
       .height(90.dp)
       .background(
         color = colorResource(id = R.color.medium_gray),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(8.dp)
       )
       .padding(16.dp)
   ) {
@@ -128,7 +110,7 @@ fun GamifiedCard(totalBooks: Int, booksRead: Int) {
       )
       Spacer(modifier = Modifier.height(8.dp))
       Text(
-        text = "Books read  $booksRead / $totalBooks",
+        text = "Telah dibaca  $booksRead / $totalBooks",
         color = Color.White,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
@@ -180,7 +162,7 @@ fun SearchBar() {
     Spacer(modifier = Modifier.width(28.dp))
     IconButton(
 
-      modifier = Modifier.background(Color((0xF5F5F5))), onClick = {
+      modifier = Modifier.background(Color((0x8E2610))), onClick = {
       }
     ) {
 
@@ -206,42 +188,51 @@ fun BookCard(
 ) {
   Column(
     modifier = modifier
+      .fillMaxWidth()
+      .height(410.dp)
+      .padding(8.dp)
   ) {
+    // Gambar buku
     MyImage(
       imageResId = R.drawable.book3,
       contentDescription = "Thumbnail",
       modifier = Modifier
-        .fillMaxSize()
+        .fillMaxWidth()
+        .aspectRatio(3f / 4f)
     )
-    Spacer(modifier = Modifier.height(12.dp))
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    // Judul buku
+    Text(
+      text = title,
+      style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+      maxLines = 2,
+      overflow = TextOverflow.Ellipsis,
+      color = colorResource(id = R.color.dark_gray),
+      modifier = Modifier.fillMaxWidth()
+    )
+
+    Spacer(modifier = Modifier.weight(0.5f)) // Spacer fleksibel
+
+    // Informasi author, likes, dan rating
     Column {
-      Text(
-        text = title,
-        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
-        color = colorResource(id = R.color.dark_gray),
-        modifier = Modifier.fillMaxWidth()
-      )
-
-      Spacer(modifier = Modifier.height(4.dp))
-
       Text(
         text = "by $author",
         style = MaterialTheme.typography.bodyMedium,
-        color = colorResource(id = R.color.medium_gray)
+        color = colorResource(id = R.color.medium_gray),
+        modifier = Modifier.fillMaxWidth()
       )
 
-      Spacer(modifier = Modifier.height(8.dp))
+      Spacer(modifier = Modifier.height(6.dp))
 
       Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
       ) {
-        Row(
-          verticalAlignment = Alignment.CenterVertically
-        ) {
+        // Likes
+        Row(verticalAlignment = Alignment.CenterVertically) {
           Icon(
             painter = painterResource(id = R.drawable.hearth),
             contentDescription = "Likes",
@@ -249,14 +240,13 @@ fun BookCard(
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
-            text = "$likes Likes",
+            text = "${formatLikesCount(likes)}", // Gunakan fungsi utilitas
             style = MaterialTheme.typography.bodyMedium
           )
         }
 
-        Row(
-          verticalAlignment = Alignment.CenterVertically
-        ) {
+        // Rating
+        Row(verticalAlignment = Alignment.CenterVertically) {
           Icon(
             painter = painterResource(id = R.drawable.star),
             contentDescription = "Rating",
@@ -271,9 +261,17 @@ fun BookCard(
         }
       }
     }
-
   }
 }
+
+fun formatLikesCount(likes: Number): String {
+  return when {
+    likes.toLong() >= 1_000_000 -> "${likes.toLong() / 1_000_000}M" // Jutaan
+    likes.toLong() >= 1_000 -> "${likes.toLong() / 1_000}K" // Ribuan
+    else -> likes.toString() // Di bawah 1.000, tampilkan angka asli
+  }
+}
+
 
 @Composable
 fun MyImage(
