@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -206,42 +207,51 @@ fun BookCard(
 ) {
   Column(
     modifier = modifier
+      .fillMaxWidth()
+      .height(410.dp)
+      .padding(8.dp)
   ) {
+    // Gambar buku
     MyImage(
       imageResId = R.drawable.book3,
       contentDescription = "Thumbnail",
       modifier = Modifier
-        .fillMaxSize()
+        .fillMaxWidth()
+        .aspectRatio(3f / 4f)
     )
-    Spacer(modifier = Modifier.height(12.dp))
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    // Judul buku
+    Text(
+      text = title,
+      style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+      maxLines = 2,
+      overflow = TextOverflow.Ellipsis,
+      color = colorResource(id = R.color.dark_gray),
+      modifier = Modifier.fillMaxWidth()
+    )
+
+    Spacer(modifier = Modifier.weight(0.5f)) // Spacer fleksibel
+
+    // Informasi author, likes, dan rating
     Column {
-      Text(
-        text = title,
-        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
-        color = colorResource(id = R.color.dark_gray),
-        modifier = Modifier.fillMaxWidth()
-      )
-
-      Spacer(modifier = Modifier.height(4.dp))
-
       Text(
         text = "by $author",
         style = MaterialTheme.typography.bodyMedium,
-        color = colorResource(id = R.color.medium_gray)
+        color = colorResource(id = R.color.medium_gray),
+        modifier = Modifier.fillMaxWidth()
       )
 
-      Spacer(modifier = Modifier.height(8.dp))
+      Spacer(modifier = Modifier.height(6.dp))
 
       Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
       ) {
-        Row(
-          verticalAlignment = Alignment.CenterVertically
-        ) {
+        // Likes
+        Row(verticalAlignment = Alignment.CenterVertically) {
           Icon(
             painter = painterResource(id = R.drawable.hearth),
             contentDescription = "Likes",
@@ -249,14 +259,13 @@ fun BookCard(
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
-            text = "$likes Likes",
+            text = "${formatLikesCount(likes)}", // Gunakan fungsi utilitas
             style = MaterialTheme.typography.bodyMedium
           )
         }
 
-        Row(
-          verticalAlignment = Alignment.CenterVertically
-        ) {
+        // Rating
+        Row(verticalAlignment = Alignment.CenterVertically) {
           Icon(
             painter = painterResource(id = R.drawable.star),
             contentDescription = "Rating",
@@ -271,9 +280,17 @@ fun BookCard(
         }
       }
     }
-
   }
 }
+
+fun formatLikesCount(likes: Number): String {
+  return when {
+    likes.toLong() >= 1_000_000 -> "${likes.toLong() / 1_000_000}M" // Jutaan
+    likes.toLong() >= 1_000 -> "${likes.toLong() / 1_000}K" // Ribuan
+    else -> likes.toString() // Di bawah 1.000, tampilkan angka asli
+  }
+}
+
 
 @Composable
 fun MyImage(
