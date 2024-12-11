@@ -68,6 +68,10 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
   val bookProgress by dataViewModel.getBooksProgress().observeAsState(initial = DataViewModel.BookProgress(0, 0))
   val isLoading by dataViewModel.isLoading.observeAsState(initial = true)
 
+  LaunchedEffect(Unit) {
+    dataViewModel.loadUserName()
+  }
+
   Surface(
     modifier = Modifier.fillMaxSize(),
     color = colorResource(id = R.color.wheat)
@@ -113,12 +117,11 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
         item(span = { GridItemSpan(maxLineSpan) }) {
           LazyRow(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = PaddingValues(vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
           ) {
             items(genres) { item ->
               DynamicCard(
-                icon = Icons.Filled.Share,
                 title = item.title,
                 backgroundColor = Color(0xFF4DA7D3)
               )
@@ -143,8 +146,3 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
     }
   }
 }
-//@Previewww
-//@Composable
-//private fun HomeScreenPrev() {
-//  HomeScreen()
-//}

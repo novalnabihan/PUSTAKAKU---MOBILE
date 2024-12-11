@@ -1,5 +1,6 @@
 package com.example.pustakaku.features.detail_book
 
+import android.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -40,6 +42,7 @@ import com.example.pustakaku.features.detail_book.components.HeaderBookDetail
 import com.example.pustakaku.ui.theme.BlueBackground
 import com.example.pustakaku.ui.theme.BlueText
 import com.example.pustakaku.ui.theme.LabelApp
+import com.example.pustakaku.ui.theme.OrangeBackground
 import com.example.pustakaku.ui.theme.PrimaryButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -129,17 +132,33 @@ fun BookDetailScreen(
         when (selectedTabIndex) {
           0 -> { // Information Tab
             Column(modifier = Modifier.padding(16.dp)) {
-              LabelApp(
-                text = book!!.kategori,
-                backgroundColor = BlueBackground,
-                textColor = BlueText
-              )
+              // Tampilkan kategori dan genre dalam satu baris
+              Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp), // Jarak antar label
+                modifier = Modifier.fillMaxWidth()
+              ) {
+                LabelApp(
+                  text = book!!.kategori,
+                  backgroundColor = BlueBackground,
+                  textColor = BlueText
+                )
+
+                if (!book!!.genre.isNullOrEmpty()) {
+                  LabelApp(
+                    text = book!!.genre,
+                    backgroundColor = OrangeBackground ,
+                    textColor = BlueText
+                  )
+                }
+              }
+
               Spacer(modifier = Modifier.height(20.dp))
+
+              // Tampilkan deskripsi buku
               HtmlText(html = book!!.description, fontSize = 16f)
               Spacer(modifier = Modifier.height(40.dp))
             }
           }
-
           1 -> { // Chapters Tab
             LazyColumn(
               modifier = Modifier.padding(16.dp),
@@ -154,6 +173,9 @@ fun BookDetailScreen(
             }
           }
         }
+
+
+
       }
     }
   }

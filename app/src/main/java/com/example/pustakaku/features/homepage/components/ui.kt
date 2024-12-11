@@ -50,42 +50,23 @@ import com.example.pustakaku.R
 
 @Composable
 fun DynamicCard(
-  icon: ImageVector,
   title: String,
   backgroundColor: Color,
   modifier: Modifier = Modifier
 ) {
-  Column(
-    horizontalAlignment = Alignment.Start,
-    verticalArrangement = Arrangement.Center,
+  Box(
     modifier = modifier
-      .size(width = 150.dp, height = 120.dp)
-      .background(color = backgroundColor, shape = RoundedCornerShape(12.dp))
-      .padding(16.dp)
+      .background(color = backgroundColor, shape = RoundedCornerShape(8.dp))
+      .padding(horizontal = 16.dp, vertical = 8.dp) // Padding untuk teks di dalam card
   ) {
-    // Icon
-    Icon(
-      imageVector = icon,
-      contentDescription = null,
-      tint = Color.White,
-
-      modifier = Modifier
-        .size(30.dp)
-        .background(
-          color = Color.White.copy(alpha = 0.2f),
-          shape = CircleShape
-        )
-        .padding(4.dp)
-    )
-    Spacer(modifier = Modifier.height(8.dp))
-    // Title
     Text(
       text = title,
       style = TextStyle(
         color = Color.White,
-        fontSize = 18.sp,
+        fontSize = 16.sp, // Ukuran font disesuaikan
         fontWeight = FontWeight.Bold
-      )
+      ),
+      modifier = Modifier.align(Alignment.Center) // Teks berada di tengah
     )
   }
 }
@@ -113,7 +94,7 @@ fun GamifiedCard(totalBooks: Int, booksRead: Int) {
       .height(90.dp)
       .background(
         color = colorResource(id = R.color.medium_gray),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(8.dp)
       )
       .padding(16.dp)
   ) {
