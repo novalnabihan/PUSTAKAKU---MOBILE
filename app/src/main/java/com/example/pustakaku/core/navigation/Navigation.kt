@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
@@ -36,14 +35,18 @@ import com.example.pustakaku.features.chapter_content.ReadingBookScreen
 //import com.example.pustakaku.features.auth.presentation.ui.viewmodel.AuthView
 import com.example.pustakaku.features.detail_book.BookDetailScreen
 import com.example.pustakaku.features.history.HistoryPage
-import com.example.pustakaku.features.profile.ProfilePage
-
+import com.example.pustakaku.features.profile.data.repository.ProfileRepository
+import com.example.pustakaku.features.profile.domain.usecase.GetUserUseCase
+import com.example.pustakaku.features.profile.domain.usecase.LogoutUseCase
+import com.example.pustakaku.features.profile.presentation.ProfileScreen
+import com.example.pustakaku.features.profile.presentation.ProfileViewModel
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     val context = LocalContext.current
-    val currentRoute = navController.currentBackStackEntryFlow.collectAsState(initial = null).value?.destination?.route
+    val currentRoute =
+        navController.currentBackStackEntryFlow.collectAsState(initial = null).value?.destination?.route
 
     // Daftar menu untuk BottomMenu
     val bottomMenuItems = listOf(
@@ -59,24 +62,24 @@ fun Navigation() {
         Scaffold(
             bottomBar = {
                 if (currentRoute in listOf("Home", "History", "Profile"))
-                BottomMenu(
-                    items = bottomMenuItems,
-                    modifier = Modifier,
-                    initialSelectedItemIndex = 0,
-                    onItemClick = { index ->
-                        val route = when (index) {
-                            0 -> "Home"
-                            1 -> "History"
-                            2 -> "Profile"
-                            else -> "Home"
+                    BottomMenu(
+                        items = bottomMenuItems,
+                        modifier = Modifier,
+                        initialSelectedItemIndex = 0,
+                        onItemClick = { index ->
+                            val route = when (index) {
+                                0 -> "Home"
+                                1 -> "History"
+                                2 -> "Profile"
+                                else -> "Home"
+                            }
+                            navController.navigate(route) {
+                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
-                        navController.navigate(route) {
-                            popUpTo(navController.graph.startDestinationId) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                )
+                    )
             }
         ) { paddingValues ->
             NavHost(
@@ -114,7 +117,8 @@ fun Navigation() {
                     HistoryPage(navController = navController)
                 }
                 composable("Profile") {
-                    ProfilePage(navController = navController)
+                    ProfileScreen(
+                        navController = navController)
                 }
                 composable(
                     route = "Detail/{bookId}",
