@@ -30,8 +30,8 @@ fun BottomMenu(
     items: List<BottomMenuContent>,
     modifier: Modifier = Modifier,
     activeHighlightColor: Color = colorResource(id = R.color.dark_gray),
-    activeTextColor: Color = colorResource(id = R.color.dark_gray),
-    inactiveTextColor: Color = colorResource(id = R.color.medium_gray),
+    activeTextColor: Color = Color(0XFF8E2610),
+    inactiveTextColor: Color = Color(0XFF8E2610),
     initialSelectedItemIndex: Int = 0,
     onItemClick: (Int) -> Unit
 ) {
@@ -66,8 +66,8 @@ fun BottomMenuItem(
     item: BottomMenuContent,
     isSelected: Boolean = false,
     activeHighlightColor: Color = colorResource(id = R.color.dark_gray),
-    activeTextColor: Color = colorResource(id = R.color.dark_gray),
-    inactiveTextColor: Color = colorResource(id = R.color.medium_gray),
+    activeTextColor: Color = Color(0XFF8E2610),
+    inactiveTextColor: Color = Color(0XFF8E2610),
     onItemClick: () -> Unit
 ) {
     Column(

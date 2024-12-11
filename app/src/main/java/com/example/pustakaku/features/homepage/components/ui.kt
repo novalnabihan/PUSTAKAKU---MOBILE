@@ -162,7 +162,7 @@ fun SearchBar() {
     Spacer(modifier = Modifier.width(28.dp))
     IconButton(
 
-      modifier = Modifier.background(Color((0xF5F5F5))), onClick = {
+      modifier = Modifier.background(Color((0x8E2610))), onClick = {
       }
     ) {
 

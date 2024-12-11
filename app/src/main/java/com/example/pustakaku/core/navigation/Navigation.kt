@@ -1,5 +1,6 @@
 package com.example.pustakaku.core.navigation
 
+import SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +22,7 @@ import androidx.navigation.navArgument
 import com.example.pustakaku.BottomMenu
 import com.example.pustakaku.BottomMenuContent
 import com.example.pustakaku.features.homepage.HomeScreen
-import com.example.pustakaku.SplashScreen
+//import com.example.pustakaku.SplashScreen
 import com.example.pustakaku.features.auth.data.repository.AuthRepository
 import com.example.pustakaku.features.auth.domain.usecase.SignInUseCase
 import com.example.pustakaku.features.auth.domain.usecase.SignUpUseCase
