@@ -60,7 +60,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
   val books = dataViewModel.books.value
   val userName = dataViewModel.userName.value
   val bookProgress by dataViewModel.getBooksProgress().observeAsState(initial = DataViewModel.BookProgress(0,0))
-
+  val isLoading by dataViewModel.isLoading.observeAsState(initial = true)
 
   Surface(
     modifier = Modifier.fillMaxSize(),
@@ -80,14 +80,19 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
       }
       GreetingText(name = userName)
 
-      if (bookProgress.totalBooks == 0) {
-        Text("No books found. Start reading!")
-      } else {
-        GamifiedCard(
-          totalBooks = bookProgress.totalBooks,
-          booksRead = bookProgress.booksRead
-        )
+      if (isLoading){
+        LoadingView()
+      } else{
+        if (bookProgress.totalBooks == 0) {
+          Text("No books found. Start reading!")
+        } else {
+          GamifiedCard(
+            totalBooks = bookProgress.totalBooks,
+            booksRead = bookProgress.booksRead
+          )
+        }
       }
+
 
       Spacer(modifier = Modifier.height(24.dp))
 

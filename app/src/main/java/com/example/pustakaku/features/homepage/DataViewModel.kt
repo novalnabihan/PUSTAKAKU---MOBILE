@@ -2,6 +2,8 @@ package com.example.pustakaku.features.homepage
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
@@ -21,6 +23,9 @@ class DataViewModel : ViewModel() {
   private val db = FirebaseFirestore.getInstance()
   private val auth = FirebaseAuth.getInstance()
 
+  private val _isLoading = MutableLiveData(true)
+  val isLoading: LiveData<Boolean> = _isLoading
+
   init {
     getData()
   }
@@ -38,9 +43,11 @@ class DataViewModel : ViewModel() {
   }
 
   fun getBooksProgress() = liveData {
+    _isLoading.postValue(true)
     val userId = auth.currentUser?.uid
     if (userId == null) {
       emit(BookProgress(0, 0))
+      _isLoading.postValue(false)
       return@liveData
     }
 
@@ -62,6 +69,8 @@ class DataViewModel : ViewModel() {
       emit(BookProgress(totalBooks = totalBooks, booksRead = booksRead))
     } catch (e: Exception) {
       emit(BookProgress(0, 0)) // Jika terjadi error, emit data default
+    } finally {
+        _isLoading.postValue(false) //set ke false setelah data dimuat
     }
   }
 
