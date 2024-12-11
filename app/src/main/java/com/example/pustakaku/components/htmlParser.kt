@@ -26,7 +26,6 @@ fun HtmlText(
   modifier: Modifier = Modifier,
   fontSize: Float = 14f, // Default font size in SP
   lineHeight: Float = 1.5f, // Default line height
-//  textColor: Color = Color(0xFFFF6500), // Default text color
   textAlign: TextAlign = TextAlign.Start // Default text alignment
 ) {
   AndroidView(
@@ -49,7 +48,6 @@ fun HtmlText(
       textView.text = html.toSpannedHtml()
       textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize)
       textView.setLineSpacing(0f, lineHeight)
-//      textView.setTextColor(textColor.toArgb())
       textView.gravity = when (textAlign) {
         TextAlign.Start -> Gravity.START
         TextAlign.Center -> Gravity.CENTER
