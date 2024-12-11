@@ -150,7 +150,7 @@ fun BookDetailScreen(
                     textColor = BlueText
                   )
                 }
-              }
+              }//
 
               Spacer(modifier = Modifier.height(20.dp))
 
