@@ -96,7 +96,6 @@ fun HeaderBookDetail(
       }
     }
 
-    // Teks di atas gambar
     Column(
       modifier = Modifier
         .align(Alignment.BottomStart)
@@ -159,7 +158,7 @@ fun ChapterItem(
   Box(
     modifier = Modifier
       .clickable { onClick() }
-      .background(color = colorResource(id = R.color.white), shape = RoundedCornerShape(4.dp))
+      .background(color = colorResource(id = R.color.medium_gray), shape = RoundedCornerShape(4.dp))
       .fillMaxWidth(),
   ) {
     Row(
@@ -168,20 +167,20 @@ fun ChapterItem(
       horizontalArrangement = Arrangement.SpaceBetween) {
       Text(
         text = chapterTitle,
-        color = Color.Black,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp),
         style = TextStyle(
           fontSize = 16.sp,
-          fontWeight = FontWeight.Bold
+          fontWeight = FontWeight.Bold,
+          color = colorResource(id = R.color.wheat)
         )
       )
       Text(
         text = "~1 Menit",
-        color = Color.Gray,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         style = TextStyle(
           fontSize = 12.sp,
-          fontWeight = FontWeight.Light
+          fontWeight = FontWeight.Light,
+          color = colorResource(id = R.color.smooth_gray)
         )
       )
     }
