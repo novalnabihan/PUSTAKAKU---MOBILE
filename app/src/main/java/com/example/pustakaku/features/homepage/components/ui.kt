@@ -2,6 +2,7 @@ package com.example.pustakaku.features.homepage.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -143,11 +144,17 @@ fun SearchBar() {
   Row(
     modifier = Modifier
       .fillMaxWidth()
+      .border( // Added border
+        width = 1.2.dp,
+        color = colorResource(id = R.color.medium_gray),
+        shape = MaterialTheme.shapes.extraLarge
+      )
       .background(
         color = colorResource(id = R.color.white),
         shape = MaterialTheme.shapes.extraLarge
       )
       .padding(horizontal = 8.dp, vertical = 4.dp), // Padding internal,
+
     verticalAlignment = Alignment.CenterVertically
   ) {
     // TextField
@@ -170,7 +177,7 @@ fun SearchBar() {
       ),
     )
 
-    Spacer(modifier = Modifier.width(20.dp))
+    Spacer(modifier = Modifier.width(28.dp))
     IconButton(
 
       modifier = Modifier.background(Color((0xF5F5F5))), onClick = {

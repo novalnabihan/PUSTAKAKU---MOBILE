@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.pustakaku.components.LoadingView
 import kotlinx.coroutines.launch
 
 @Composable
@@ -70,11 +71,7 @@ fun ReadingBookScreen(
         .background(color = colorResource(id = R.color.wheat)),
       contentAlignment = Alignment.Center,
     ) {
-      CircularProgressIndicator(
-        modifier = Modifier.width(64.dp),
-        color = MaterialTheme.colorScheme.secondary,
-        trackColor = MaterialTheme.colorScheme.surfaceVariant
-      )
+      LoadingView()
     }
   } else {
     Scaffold(

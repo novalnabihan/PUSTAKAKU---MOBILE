@@ -1,5 +1,6 @@
 package com.example.pustakaku.features.homepage
 
+import android.icu.util.IslamicCalendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pustakaku.R
+import com.example.pustakaku.components.LoadingView
 import com.example.pustakaku.features.homepage.components.BookCard
 import com.example.pustakaku.features.homepage.components.DynamicCard
 import com.example.pustakaku.features.homepage.components.GamifiedCard
@@ -53,8 +55,8 @@ import com.example.pustakaku.features.homepage.components.SearchBar
 
 @Composable
 fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = viewModel()) {
-  val genres_ = dataViewModel.genres.value
-  val books_ = dataViewModel.books.value
+  val genres = dataViewModel.genres.value
+  val books = dataViewModel.books.value
   val userName = dataViewModel.userName.value
 
   Surface(
@@ -77,17 +79,13 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
       GamifiedCard(totalBooks = 10, booksRead = 3)
       Spacer(modifier = Modifier.height(24.dp))
 
-      if (genres_.isEmpty() or books_.isEmpty()) {
+      if (genres.isEmpty() or books.isEmpty()) {
         Box(
           modifier = Modifier
             .fillMaxSize(),
           contentAlignment = Alignment.Center
         ) {
-          CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
-            color = MaterialTheme.colorScheme.secondary,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant
-          )
+          LoadingView()
         }
       } else {
         LazyRow(
@@ -97,7 +95,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
           contentPadding = PaddingValues(vertical = 16.dp),
           horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-          items(genres_) { item ->
+          items(genres) { item ->
             DynamicCard(
               icon = Icons.Filled.Share,
               title = item.title,
@@ -110,7 +108,7 @@ fun HomeScreen(navController: NavController, dataViewModel: DataViewModel = view
           modifier = Modifier
             .fillMaxWidth()
         ) {
-          items(books_) { item ->
+          items(books) { item ->
             BookCard(
               title = item.title,
               rating = item.rating,
