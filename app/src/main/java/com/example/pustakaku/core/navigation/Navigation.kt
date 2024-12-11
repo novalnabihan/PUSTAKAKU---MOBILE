@@ -117,8 +117,7 @@ fun Navigation() {
                     HistoryPage(navController = navController)
                 }
                 composable("Profile") {
-                    ProfileScreen(
-                        navController = navController)
+                    ProfileScreen(navController = navController)
                 }
                 composable(
                     route = "Detail/{bookId}",
