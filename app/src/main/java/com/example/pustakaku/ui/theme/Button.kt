@@ -6,11 +6,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pustakaku.R
+        
 
 @Composable
 fun PrimaryButton(
@@ -21,13 +24,13 @@ fun PrimaryButton(
 ) {
   Button(
     onClick = { onClick() },
-    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A2438)),
+    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.orange)),
     shape = MaterialTheme.shapes.small,
     modifier = Modifier.then(
       if (fullWidth) Modifier.fillMaxWidth() else Modifier
     )
   ) {
-    Text(text = text, fontSize = fontSize)
+    Text(text = text, fontSize = fontSize, color = colorResource(id = R.color.dark_gray))
   }
 }
 
