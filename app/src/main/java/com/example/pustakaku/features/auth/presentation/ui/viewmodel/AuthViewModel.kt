@@ -29,7 +29,7 @@ class AuthViewModel(
     val registrationPassword = mutableStateOf("")
     val registrationConfirmPassword = mutableStateOf("")
     val registrationName = mutableStateOf("")
-    val registrationPhone = mutableStateOf("")
+//    val registrationPhone = mutableStateOf("")
 
     val isLoginSuccessful = mutableStateOf(false)
     val isRegistrationSuccessful = mutableStateOf(false)
@@ -47,10 +47,10 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String, password: String, name: String, phone: String, onSuccess: () -> Unit) {
+    fun register(email: String, password: String, name: String, onSuccess: () -> Unit) {
         _isLoading.value = true
         viewModelScope.launch {
-            val result = signUpUseCase.execute(email, password, name, phone)
+            val result = signUpUseCase.execute(email, password, name)
             _isLoading.value = false
             if (result.isSuccess) {
                 onSuccess()
