@@ -34,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pustakaku.R
 import com.example.pustakaku.components.HtmlText
+import com.example.pustakaku.components.LoadingView
 import com.example.pustakaku.features.detail_book.components.ChapterItem
 import com.example.pustakaku.features.detail_book.components.HeaderBookDetail
 import com.example.pustakaku.ui.theme.BlueBackground
@@ -67,11 +68,7 @@ fun BookDetailScreen(
         .background(color = colorResource(id = R.color.wheat)),
       contentAlignment = Alignment.Center,
     ) {
-      CircularProgressIndicator(
-        modifier = Modifier.width(64.dp),
-        color = MaterialTheme.colorScheme.secondary,
-        trackColor = MaterialTheme.colorScheme.surfaceVariant
-      )
+      LoadingView()
     }
   } else {
     Scaffold(
