@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
@@ -52,7 +53,7 @@ fun Navigation() {
     // Daftar menu untuk BottomMenu
     val bottomMenuItems = listOf(
         BottomMenuContent("Home", Icons.Default.Home),
-        BottomMenuContent("History", Icons.Default.List),
+        BottomMenuContent("History", Icons.Default.Menu),
         BottomMenuContent("Profile", Icons.Default.Person)
     )
 
