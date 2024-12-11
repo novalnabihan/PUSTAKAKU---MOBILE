@@ -2,7 +2,10 @@ package com.example.pustakaku.features.homepage
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 
@@ -17,14 +20,57 @@ class DataViewModel : ViewModel() {
   val books = mutableStateOf<List<BookModel>>(emptyList())
   val userName = mutableStateOf("")
 
+  private val db = FirebaseFirestore.getInstance()
+  private val auth = FirebaseAuth.getInstance()
+
+  private val _isLoading = MutableLiveData(true)
+  val isLoading: LiveData<Boolean> = _isLoading
+
   init {
     getData()
   }
+
+  data class BookProgress(
+    val totalBooks: Int,
+    val booksRead: Int
+  )
 
   private fun getData() {
     viewModelScope.launch {
       genres.value = getGenres()
       books.value = getBooks()
+    }
+  }
+
+  fun getBooksProgress() = liveData {
+    _isLoading.postValue(true)
+    val userId = auth.currentUser?.uid
+    if (userId == null) {
+      emit(BookProgress(0, 0))
+      _isLoading.postValue(false)
+      return@liveData
+    }
+
+    try {
+      // Mendapatkan total jumlah buku user
+      val userBooksSnapshot = db.collection("user_books")
+        .whereEqualTo("user_id", userId)
+        .get()
+        .await()
+
+      val totalBooks = userBooksSnapshot.documents.size
+
+      // Mendapatkan jumlah buku yang progressnya sudah selesai (misal progress = 100%)
+      val booksRead = userBooksSnapshot.documents.count { document ->
+        val progress = document.getLong("progress")?.toInt() ?: 0
+        progress == 100 // Buku dianggap selesai jika progress = 100
+      }
+
+      emit(BookProgress(totalBooks = totalBooks, booksRead = booksRead))
+    } catch (e: Exception) {
+      emit(BookProgress(0, 0)) // Jika terjadi error, emit data default
+    } finally {
+        _isLoading.postValue(false) //set ke false setelah data dimuat
     }
   }
 
