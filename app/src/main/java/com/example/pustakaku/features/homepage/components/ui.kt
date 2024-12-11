@@ -209,7 +209,7 @@ fun BookCard(
       style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
       maxLines = 2,
       overflow = TextOverflow.Ellipsis,
-      color = colorResource(id = R.color.dark_gray),
+      color = colorResource(id = R.color.medium_gray),
       modifier = Modifier.fillMaxWidth()
     )
 
@@ -237,12 +237,13 @@ fun BookCard(
             painter = painterResource(id = R.drawable.hearth),
             contentDescription = "Likes",
             modifier = Modifier.size(18.dp),
-            tint =  colorResource(id = R.color.dark_gray)
+            tint =  colorResource(id = R.color.medium_gray)
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
             text = "${formatLikesCount(likes)}", // Gunakan fungsi utilitas
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.medium_gray)
           )
         }
 
@@ -252,12 +253,13 @@ fun BookCard(
             painter = painterResource(id = R.drawable.star),
             contentDescription = "Rating",
             modifier = Modifier.size(18.dp),
-            tint = colorResource(id = R.color.dark_gray)
+            tint = colorResource(id = R.color.medium_gray)
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
             text = "$rating/5",
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.medium_gray)
           )
         }
       }
