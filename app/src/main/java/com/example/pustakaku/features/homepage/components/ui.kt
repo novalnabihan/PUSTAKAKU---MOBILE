@@ -75,10 +75,10 @@ fun DynamicCard(
 fun GreetingText(name: String) {
   Text(
     buildAnnotatedString {
-      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Normal)) {
+      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Normal, color = colorResource(id = R.color.medium_gray))) {
         append("Hello, ")
       }
-      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold)) {
+      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold, color = colorResource(id = R.color.medium_gray))) {
         append(name)
       }
     },
@@ -189,7 +189,7 @@ fun BookCard(
   Column(
     modifier = modifier
       .fillMaxWidth()
-      .height(410.dp)
+      .height(450.dp)
       .padding(8.dp)
   ) {
     // Gambar buku
@@ -209,7 +209,7 @@ fun BookCard(
       style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
       maxLines = 2,
       overflow = TextOverflow.Ellipsis,
-      color = colorResource(id = R.color.dark_gray),
+      color = colorResource(id = R.color.medium_gray),
       modifier = Modifier.fillMaxWidth()
     )
 
@@ -237,11 +237,13 @@ fun BookCard(
             painter = painterResource(id = R.drawable.hearth),
             contentDescription = "Likes",
             modifier = Modifier.size(18.dp),
+            tint =  colorResource(id = R.color.medium_gray)
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
             text = "${formatLikesCount(likes)}", // Gunakan fungsi utilitas
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.medium_gray)
           )
         }
 
@@ -251,12 +253,13 @@ fun BookCard(
             painter = painterResource(id = R.drawable.star),
             contentDescription = "Rating",
             modifier = Modifier.size(18.dp),
-            tint = colorResource(id = R.color.dark_gray)
+            tint = colorResource(id = R.color.medium_gray)
           )
           Spacer(modifier = Modifier.width(4.dp))
           Text(
             text = "$rating/5",
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.medium_gray)
           )
         }
       }
@@ -266,7 +269,6 @@ fun BookCard(
 
 fun formatLikesCount(likes: Number): String {
   return when {
-    likes.toLong() >= 1_000_000 -> "${likes.toLong() / 1_000_000}M" // Jutaan
     likes.toLong() >= 1_000 -> "${likes.toLong() / 1_000}K" // Ribuan
     else -> likes.toString() // Di bawah 1.000, tampilkan angka asli
   }

@@ -93,7 +93,8 @@ fun TitlePage(
     text = title,
     style = TextStyle(
       fontSize = fontSize,
-      fontWeight = fontWeight
+      fontWeight = fontWeight,
+      color = colorResource(id = R.color.medium_gray)
     ),
     modifier = modifier.padding(bottom = 16.dp)
   )

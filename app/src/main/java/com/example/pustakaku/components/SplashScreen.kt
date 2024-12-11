@@ -54,6 +54,7 @@ fun SplashScreen(navController: NavController, context: Context) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "PUSTAKAKU",
+            color = Color.Black,
             style = TextStyle(
                 fontSize = 30.sp,
                 fontFamily = font

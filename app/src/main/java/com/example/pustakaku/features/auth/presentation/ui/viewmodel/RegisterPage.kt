@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -65,6 +66,7 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
                 text = "Sign Up",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
+                color = Color.Black,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
@@ -74,9 +76,10 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
             OutlinedTextField(
                 value = authViewModel.registrationName.value,
                 onValueChange = { authViewModel.registrationName.value = it },
-                label = { Text(text = "Name") },
-                placeholder = { Text(text = "Name") },
+                label = { Text(text = "Name", color = Color.Black) },
+                placeholder = { Text(text = "Name", color = Color.Black) },
                 singleLine = true,
+                textStyle = TextStyle(color = Color.Black), // Ubah warna teks
                 modifier = Modifier.fillMaxWidth(0.8f)
             )
 
@@ -84,9 +87,10 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
             OutlinedTextField(
                 value = authViewModel.registrationEmail.value,
                 onValueChange = { authViewModel.registrationEmail.value = it },
-                label = { Text(text = "Email Address") },
-                placeholder = { Text(text = "Email Address") },
+                label = { Text(text = "Email Address", color = Color.Black) },
+                placeholder = { Text(text = "Email Address", color = Color.Black) },
                 singleLine = true,
+                textStyle = TextStyle(color = Color.Black), // Ubah warna teks
                 modifier = Modifier.fillMaxWidth(0.8f)
             )
 
@@ -95,10 +99,11 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
             OutlinedTextField(
                 value = authViewModel.registrationPassword.value,
                 onValueChange = { authViewModel.registrationPassword.value = it },
-                label = { Text(text = "Password") },
-                placeholder = { Text(text = "Password") },
+                label = { Text(text = "Password", color = Color.Black) },
+                placeholder = { Text(text = "Password", color = Color.Black) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
+                textStyle = TextStyle(color = Color.Black), // Ubah warna teks
                 trailingIcon = {
                     IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value }) {
                         Icon(
@@ -115,10 +120,11 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
             OutlinedTextField(
                 value = authViewModel.registrationConfirmPassword.value,
                 onValueChange = { authViewModel.registrationConfirmPassword.value = it },
-                label = { Text(text = "Confirm Password") },
-                placeholder = { Text(text = "Confirm Password") },
+                label = { Text(text = "Confirm Password", color = Color.Black) },
+                placeholder = { Text(text = "Confirm Password", color = Color.Black) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
+                textStyle = TextStyle(color = Color.Black), // Ubah warna teks
                 trailingIcon = {
                     IconButton(onClick = { confirmPasswordVisibility.value = !confirmPasswordVisibility.value }) {
                         Icon(
@@ -168,6 +174,7 @@ fun RegisterPage(navController: NavController, context: Context, authViewModel: 
             // Text "Login Instead"
             Text(
                 text = "Sudah punya akun? Login",
+                color = Color.Black,
                 modifier = Modifier.clickable(onClick = {
                     navController.navigate("Login") {
                         popUpTo(navController.graph.startDestinationId)
