@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -69,6 +70,7 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
                 text = "Sign In",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
+                color = Color.Black,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
 
@@ -78,20 +80,23 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
             OutlinedTextField(
                 value = emailValue.value,
                 onValueChange = { emailValue.value = it },
-                label = { Text("Email Address") },
-                placeholder = { Text("Email Address") },
+                label = { Text("Email Address", color = Color.Black) },
+                placeholder = { Text("Email Address", color = Color.Gray) },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth(0.8f)
+                modifier = Modifier.fillMaxWidth(0.8f),
+                textStyle = TextStyle(color = Color.Black), // Ubah warna teks
+
             )
 
             // Input Password
             OutlinedTextField(
                 value = passwordValue.value,
                 onValueChange = { passwordValue.value = it },
-                label = { Text("Password") },
-                placeholder = { Text("Password") },
+                label = { Text("Password", color = Color.Black) },
+                placeholder = { Text("Password", color = Color.Black) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
+                textStyle = TextStyle(color = Color.Black), // Ubah warna teks
                 trailingIcon = {
                     IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value }) {
                         Icon(
@@ -139,7 +144,9 @@ fun LoginPage(navController: NavController, context: Context, authviewModel: Aut
             // Text "Create An Account"
             Text(
                 text = "Belum punya akun? Buat akun",
-                modifier = Modifier.clickable(onClick = {
+                color = Color.Black,
+                modifier = Modifier
+                    .clickable(onClick = {
                     navController.navigate("Register") {
                         popUpTo(navController.graph.startDestinationId)
                         launchSingleTop = true

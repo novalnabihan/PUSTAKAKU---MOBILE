@@ -75,10 +75,10 @@ fun DynamicCard(
 fun GreetingText(name: String) {
   Text(
     buildAnnotatedString {
-      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Normal)) {
+      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Normal, color = colorResource(id = R.color.medium_gray))) {
         append("Hello, ")
       }
-      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold)) {
+      withStyle(style = SpanStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold, color = colorResource(id = R.color.medium_gray))) {
         append(name)
       }
     },
